@@ -2,6 +2,20 @@
   text-align: center;
 }
 
+body{
+  font-family: 'nanumsquare';
+}
+
+.black-nav{
+  background-color: black;
+  color : white;
+  width : 100%;
+  display : flex; 
+  padding : 20px;
+  font-weight: 600;
+  font-size : 20px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
