@@ -7,13 +7,20 @@ body{
 }
 
 .black-nav{
-  background-color: black;
+  background-color: rgba(0,0,0,0.8);
   color : white;
   width : 100%;
   display : flex; 
   padding : 20px;
   font-weight: 600;
   font-size : 20px;
+}
+
+.list{
+  text-align: left;
+  margin-top : 10px; 
+  padding-left : 10px;
+  padding-right : 10px; 
 }
 
 .App-logo {
