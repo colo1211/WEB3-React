@@ -6,6 +6,10 @@ body{
   font-family: 'nanumsquare';
 }
 
+.btn{
+  margin : 10px; 
+}
+
 .black-nav{
   background-color: rgba(0,0,0,0.8);
   color : white;
