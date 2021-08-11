@@ -20,3 +20,17 @@ onInput과 onChange가 동일한 역할을 한다.
 let [입력값, 입력값변경] = useState(''); 
 <input onChange={ (e)=>{ 입력값변경(e.target.value) }} />
 
+[글 발행 기능 만들기] 
+1. 사용자가 입력한 글을 state 변경함수를 통해서 입력값 state에 저장하기
+=> e.target.value 를 사용하여 입력한 글을 가져 올 수 있다. 
+
+let [글제목, 글제목변경] = useState(['수원시맛집','강남카페거리','하동녹차관광지']);
+let [입력값, 입력값변경] = useState(''); 
+<input className='input-submit' onInput={ (e)=>{ 입력값변경(e.target.value) } }/>
+
+2. 입력값 state에 저장된 값을 글제목 state 변경함수를 사용하여 글제목에 저장하기
+<button className='my-btn' onClick={ ()=>{ 
+     let temp = [ ...글제목 ]; // 최대한 state 원본은 안건드는게 좋음
+     temp.unshift(입력값);
+     글제목변경(temp);
+  } }> Submit </button>
