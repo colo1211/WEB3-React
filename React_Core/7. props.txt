@@ -37,3 +37,29 @@ function Modal(props){
   )
 }
 
+
+[여러가지 props를 전달하는 방법] : 특별한거 없음, 그냥 옆에다가 늘여서 똑같이 쓰면 됨
+<Modal 글제목 = {글제목} 누른번호 = {누른번호} modal변경={modal변경}></Modal>
+
+
+[Props 를 활용하여 누른 제목에 따라 모달창이 바뀌는 UI를 개발하는 방법]
+
+1. 현재 사용자가 클릭한 제목 번호를 저장하는 state를 하나 만들어 준다. 
+Tip ! state는 UI의 현재상태를 보관하는 저장소 역할
+
+2. 해당 제목을 클릭하면 onClick 을 통해서 해당 번호를 변경하는 state 함수를 통해 state 값을 변경
+ex) map 의 index를 통해서 해결
+글제목.map((value,index)=>{
+              return (
+                <div className='list' onClick={ ()=>{ modal변경(true)} }>
+                <h3 onClick={ ()=>{ 누른번호변경(index) } }> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
+                <p> 12월 11일 작성</p>
+                <hr/>
+            </div>
+              );
+            })
+          }
+
+3. 자식 Component에서 { props.글제목[ props.누른번호 ] }
+
+

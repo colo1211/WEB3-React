@@ -5,9 +5,10 @@ import './App.css';
 
 function App() {
 
-  let [글제목, 글제목변경] = useState(['수원시 맛집','강남 카페 거리','하동 녹차 관광지']);
+  let [글제목, 글제목변경] = useState(['수원시맛집','강남카페거리','하동녹차관광지']);
   let [좋아요, 좋아요변경] = useState([0,0,0]);
   let [modal, modal변경] = useState(false);
+  let [누른번호, 누른번호변경] = useState(0);
 
 
   //  map 함수
@@ -88,7 +89,7 @@ function App() {
             글제목.map((value,index)=>{
               return (
                 <div className='list' onClick={ ()=>{ modal변경(true)} }>
-                <h3> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
+                <h3 onClick={ ()=>{ 누른번호변경(index) } }> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div>
@@ -124,7 +125,7 @@ function App() {
 
            {
              modal === true
-             ? <Modal></Modal> // true일때 Modal 창을 띄운다. 
+             ? <Modal 글제목 = {글제목} 누른번호 = {누른번호} modal변경={modal변경}></Modal> // true일때 Modal 창을 띄운다. 
              : null  // false 일때 Modal 창을 닫는다. 
            }
   
@@ -134,13 +135,17 @@ function App() {
 
 
 // 컴포넌트로 만든 Modal UI 
-function Modal(){
+// 자식 컴포넌트(Modal)는 부모 컴포넌트(App)에서 선언한 state를 사용하기 위해서는 props를 통해서 전달해야 한다. 
+// props : 일종의 매개변수(?) 느낌
+// { props.state명 }으로 불러와서 사용 가능
+
+function Modal(props){
   return (
     <div className='modal'>
-    <h3> 제목 </h3>
+    <h3> 제목 : {props.글제목[props.누른번호]}</h3>
     <p> 상세내역 </p>
     <p> 날짜 </p>
-    <button>Close</button>
+    <button onClick = {()=>{props.modal변경(false)}} >Close</button>
   </div>
   )
 }
