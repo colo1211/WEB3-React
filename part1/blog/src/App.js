@@ -7,6 +7,8 @@ function App() {
 
   let [글제목, 글제목변경] = useState(['수원시 맛집','강남 카페 거리','하동 녹차 관광지']);
   let [좋아요, 좋아요변경] = useState([0,0,0]);
+  let [modal, modal변경] = useState(false);
+
 
   function 좋아요추가(value){
     let tempLike = [...좋아요];
@@ -44,6 +46,7 @@ function App() {
   }
 
   return (
+    //return 내에서는 
     <div className="App">
           <div className='black-nav'>
             <div style={{fontSize : '15px'}}>My Dev-blog</div>
@@ -57,7 +60,7 @@ function App() {
 
           <button className='btn' onClick={ 제목바꾸기 }> 상품 목록 변경 </button>
           <button className='btn' onClick={ 순서바꾸기 }> 상품 순서 정렬 </button>
-            <div className='list'>
+            <div className='list' onClick={ ()=>{ modal변경(true)} }>
                 <h3> {글제목[0]} <span className='like-hand' onClick={ ()=>{ 좋아요추가(0)}}>👍</span> { 좋아요[0] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
@@ -74,8 +77,26 @@ function App() {
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div>
+           
+           {/* 리액트에서 UI를 만드는 관습 : state를 사용하여 조건에 맞게 true, false를 통해서 UI를 On/Off 한다.  */}
+           {
+             modal === true
+             ? <Modal></Modal> // true
+             : null // false
+           }
+           
     </div>
   );
+}
+
+function Modal(){
+  return (
+    <div className='modal'>
+    <h3> 제목 </h3>
+    <p> 상세내역 </p>
+    <p> 날짜 </p>
+  </div>
+  )
 }
 
 export default App;

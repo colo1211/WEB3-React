@@ -14,6 +14,12 @@ body{
   cursor: pointer;
 }
 
+.modal{
+  background-color: #eee;
+  padding : 20px; 
+  margin-top : 40px; 
+}
+
 .black-nav{
   background-color: rgba(0,0,0,0.8);
   color : white;
@@ -29,6 +35,10 @@ body{
   margin-top : 10px; 
   padding-left : 10px;
   padding-right : 10px; 
+}
+
+.list h3{
+  cursor: pointer;
 }
 
 .App-logo {
