@@ -10,6 +10,17 @@ function App() {
   let [modal, modal변경] = useState(false);
 
 
+  /* 토글 역할을 해주는 modal 스위치 */
+  function modal스위치(){
+    if(modal === true){ // 열려야함 
+      modal변경(false);
+      console.log(modal);
+    }else { // 닫혀야함
+      modal변경(true);
+      console.log(modal);
+    }
+  }
+
   function 좋아요추가(value){
     let tempLike = [...좋아요];
     tempLike[value] += 1;
@@ -78,17 +89,24 @@ function App() {
                 <hr/>
             </div>
            
-           {/* 리액트에서 UI를 만드는 관습 : state를 사용하여 조건에 맞게 true, false를 통해서 UI를 On/Off 한다.  */}
+           <button onClick={()=>{ modal스위치() }}> 모달창 띄우기 버튼</button>
+
+          {/* 리액트에서의 if문 : 삼항연산자 
+            JSX 내에서 JS 문법을 사용하기 위해서는 중괄호로 감싼 이후에 작성하여야 한다. 
+          */}
+
            {
              modal === true
-             ? <Modal></Modal> // true
-             : null // false
+             ? <Modal></Modal> // true일때 Modal 창을 띄운다. 
+             : null  // false 일때 Modal 창을 닫는다. 
            }
-           
+  
     </div>
   );
 }
 
+
+// 컴포넌트로 만든 Modal UI 
 function Modal(){
   return (
     <div className='modal'>
