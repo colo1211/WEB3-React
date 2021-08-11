@@ -5,9 +5,15 @@ import './App.css';
 
 function App() {
 
-
   let [글제목, 글제목변경] = useState(['수원시 맛집','강남 카페 거리','하동 녹차 관광지']);
-  let [좋아요, 좋아요변경] = useState(0);
+  let [좋아요, 좋아요변경] = useState([0,0,0]);
+
+  function 좋아요추가(value){
+    let tempLike = [...좋아요];
+    tempLike[value] += 1;
+    console.log(tempLike);
+    좋아요변경(tempLike);
+  }
 
   function 제목바꾸기(){
 // 전제 : 수정을 할때는 무조건 수정함수를 통해서 수정한다. 
@@ -52,19 +58,19 @@ function App() {
           <button className='btn' onClick={ 제목바꾸기 }> 상품 목록 변경 </button>
           <button className='btn' onClick={ 순서바꾸기 }> 상품 순서 정렬 </button>
             <div className='list'>
-                <h3> {글제목[0]} <span onClick={ ()=>{ 좋아요변경(좋아요 + 1)}}>👍</span> {좋아요} </h3>
+                <h3> {글제목[0]} <span className='like-hand' onClick={ ()=>{ 좋아요추가(0)}}>👍</span> { 좋아요[0] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div>
 
             <div className='list'>
-                <h3> {글제목[1]} <span>👍</span> 0 </h3>
+                <h3> {글제목[1]} <span className='like-hand' onClick={()=>{ 좋아요추가(1) }}>👍</span> { 좋아요[1] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div>
 
             <div className='list'>
-                <h3> {글제목[2]} <span>👍</span> 0 </h3>
+                <h3> {글제목[2]} <span className='like-hand' onClick = {()=>{ 좋아요추가(2) }}>👍</span> { 좋아요[2] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div>
