@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React,{useState} from 'react';
+import React , {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -8,6 +8,15 @@ function App() {
   let [글제목, 글제목변경] = useState(['수원시 맛집','강남 카페 거리','하동 녹차 관광지']);
   let [좋아요, 좋아요변경] = useState([0,0,0]);
   let [modal, modal변경] = useState(false);
+
+
+  //  map 함수
+  var 어레이 = [2,3,4]; 
+  // array 내의 모든 데이터에 똑같은 작업을 시켜주고 싶을 때 .map()
+  var newArray = 어레이.map(function(value){
+    return value * 3; 
+  })
+  console.log(newArray);
 
 
   /* 토글 역할을 해주는 modal 스위치 */
@@ -71,6 +80,22 @@ function App() {
 
           <button className='btn' onClick={ 제목바꾸기 }> 상품 목록 변경 </button>
           <button className='btn' onClick={ 순서바꾸기 }> 상품 순서 정렬 </button>
+
+          {
+            // JSX 내에서는 for,if 를 사용 할 수 없다. 
+            // 따라서 JSX 내에서 JS 문법을 사용하기 위해서는 {} 내에 작성해야 한다. 
+            // if X -> 삼항연산자 , for X -> .map or forEach 내장함수를 사용한다.
+            글제목.map((value,index)=>{
+              return (
+                <div className='list' onClick={ ()=>{ modal변경(true)} }>
+                <h3> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
+                <p> 12월 11일 작성</p>
+                <hr/>
+            </div>
+              );
+            })
+          }
+{/* 
             <div className='list' onClick={ ()=>{ modal변경(true)} }>
                 <h3> {글제목[0]} <span className='like-hand' onClick={ ()=>{ 좋아요추가(0)}}>👍</span> { 좋아요[0] } </h3>
                 <p> 12월 11일 작성</p>
@@ -87,12 +112,14 @@ function App() {
                 <h3> {글제목[2]} <span className='like-hand' onClick = {()=>{ 좋아요추가(2) }}>👍</span> { 좋아요[2] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
-            </div>
+            </div> */}
            
            <button onClick={()=>{ modal스위치() }}> 모달창 띄우기 버튼</button>
 
           {/* 리액트에서의 if문 : 삼항연산자 
             JSX 내에서 JS 문법을 사용하기 위해서는 중괄호로 감싼 이후에 작성하여야 한다. 
+            ex) 변수, 함수
+            if X -> 삼항연산자,  for X -> map()함수 
           */}
 
            {
@@ -113,6 +140,7 @@ function Modal(){
     <h3> 제목 </h3>
     <p> 상세내역 </p>
     <p> 날짜 </p>
+    <button>Close</button>
   </div>
   )
 }
