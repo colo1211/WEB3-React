@@ -9,6 +9,7 @@ function App() {
   let [좋아요, 좋아요변경] = useState([0,0,0]);
   let [modal, modal변경] = useState(false);
   let [누른번호, 누른번호변경] = useState(0);
+  let [입력값, 입력값변경] = useState(''); 
 
 
   //  map 함수
@@ -17,8 +18,6 @@ function App() {
   var newArray = 어레이.map(function(value){
     return value * 3; 
   })
-  console.log(newArray);
-
 
   /* 토글 역할을 해주는 modal 스위치 */
   function modal스위치(){
@@ -88,7 +87,7 @@ function App() {
             // if X -> 삼항연산자 , for X -> .map or forEach 내장함수를 사용한다.
             글제목.map((value,index)=>{
               return (
-                <div className='list' onClick={ ()=>{ modal변경(true)} }>
+                <div className='list' key = { index } onClick={ ()=>{ modal변경(true)} }>
                 <h3 onClick={ ()=>{ 누른번호변경(index) } }> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
@@ -114,6 +113,19 @@ function App() {
                 <p> 12월 11일 작성</p>
                 <hr/>
             </div> */}
+
+
+
+
+            {/* 게시물 작성 하기 */}
+          <div className='wrap-input'>
+            <input className='input-submit' onInput={ (e)=>{ 입력값변경(e.target.value) } }/>
+            <button className='my-btn' onClick={ ()=>{ 
+              let temp = [...글제목];
+              temp.unshift(입력값);
+              글제목변경(temp);
+             } }> Submit </button>
+          </div>
            
            <button onClick={()=>{ modal스위치() }}> 모달창 띄우기 버튼</button>
 
