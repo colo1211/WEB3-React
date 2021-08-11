@@ -41,6 +41,28 @@ body{
   cursor: pointer;
 }
 
+.wrap-input{
+  margin-top : 40px;
+  margin-bottom : 40px;
+}
+
+.input-submit{
+  padding : 15px;
+  font-size : 15px;
+  border : 1px solid black; 
+  border-radius: 10px;
+}
+
+.my-btn{
+  border : none; 
+  border-radius: 10px;
+  padding : 10px; 
+  background-color: rgba(0,0,0,0.5);
+  color : white; 
+  margin-left : 20px; 
+  cursor:  pointer;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
