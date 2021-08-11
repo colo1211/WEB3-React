@@ -25,7 +25,7 @@ if X -> 삼항연산자,  for X -> map()함수 혹은 forEach()
 {
             글제목.map((value,index)=>{
               return (
-                <div className='list' onClick={ ()=>{ modal변경(true)} }>
+                <div className='list' key = {index} onClick={ ()=>{ modal변경(true)} }>
                 <h3> {value} <span className='like-hand' onClick={ ()=>{ 좋아요추가(index)}}>👍</span> { 좋아요[index] } </h3>
                 <p> 12월 11일 작성</p>
                 <hr/>
@@ -33,3 +33,7 @@ if X -> 삼항연산자,  for X -> map()함수 혹은 forEach()
               );
             })
 }
+
+참고) 
+map 으로 JSX를 반복문을 돌리면 WARNING 이 뜹니다. (작동은 잘 됨)
+map 반복문으로 돌린 HTML 에 key={ index } 를 추가해 주면 WARNING 이 사라집니다. 
