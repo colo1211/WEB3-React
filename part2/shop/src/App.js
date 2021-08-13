@@ -52,6 +52,7 @@ function App() {
         <div className = 'row'>
           {/* bootstrap grid layout
           하나의 row는 12col 로 이루어져 있다.  */}
+         
           <div className = 'col-sm-4 img-wrap'>
             <img src='이미지파일/shoes1.jpg'/> 
             <h4> 상품명 : {shoes[0].title} </h4>
@@ -71,20 +72,27 @@ function App() {
             <p> 가격 : {shoes[2].price} </p> 
           </div>  
             
-        </div>
+        </div> 
+        <ProductTemplate shoes={shoes}></ProductTemplate>
       </div>
-
+      
 
     </div>
 
   );
 }
 
-// function ProductTemplate(props){
-//   console.log(props);
-//   return ( 
-          
-//   );
-// }
+
+// Product 목록 생성해주는 Component 반복문 내에서 요소 추가될때 마다 추가되도록 수정 하기 
+function ProductTemplate(props){
+  return ( 
+    <div className = 'col-sm-4 img-wrap'>
+    <img src='이미지파일/shoes3.jpg'/> 
+    <h4> 상품명 : {props.shoes[2].title} </h4>
+    <p> 상품설명 : {props.shoes[2].content } </p> 
+    <p> 가격 : {props.shoes[2].price} </p> 
+  </div>      
+  );
+}
 
 export default App;
