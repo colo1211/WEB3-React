@@ -7,6 +7,23 @@
   pointer-events: none;
 }
 
+.Jumbotron{
+  background-image: url('./background.jpg');
+  background-size : cover; 
+  height : 40vh;
+  color : white; 
+}
+
+.img-wrap{
+  width : 33%;
+  height : 400px; 
+  background-color : #eee;
+}
+
+.img-wrap img{
+  width : 100%;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
