@@ -1,10 +1,16 @@
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap'; 
-
+// data.js 에서 데이터를 import 해오기 
+import data from './data.js'; 
 
 function App() {
+
+  
+  let [shoes , shoes변경] = useState(data); 
   return (
+
     <div className="App">
 
       {/* Navbar 레이아웃 */}
@@ -48,19 +54,23 @@ function App() {
           하나의 row는 12col 로 이루어져 있다.  */}
           <div className = 'col-sm-4 img-wrap'>
             <img src='이미지파일/shoes1.jpg'/> 
-            <h4> 상품명 </h4>
-            <p> 상품설명 </p> 
+            <h4> 상품명 : {shoes[0].title} </h4>
+            <p> 상품설명 : {shoes[0].content } </p> 
+            <p> 가격 : {shoes[0].price} </p> 
           </div>  
           <div className = 'col-sm-4 img-wrap'>
             <img src='이미지파일/shoes2.jpg'/> 
-            <h4> 상품명 </h4>
-            <p> 상품설명 </p>
+            <h4> 상품명 : {shoes[1].title} </h4>
+            <p> 상품설명 : {shoes[1].content } </p> 
+            <p> 가격 : {shoes[1].price} </p> 
           </div>  
           <div className = 'col-sm-4 img-wrap'>
-          <img src='이미지파일/shoes3.jpg'/> 
-            <h4> 상품명 </h4>
-            <p> 상품설명 </p>
+            <img src='이미지파일/shoes3.jpg'/> 
+            <h4> 상품명 : {shoes[2].title} </h4>
+            <p> 상품설명 : {shoes[2].content } </p> 
+            <p> 가격 : {shoes[2].price} </p> 
           </div>  
+            
         </div>
       </div>
 
@@ -69,5 +79,12 @@ function App() {
 
   );
 }
+
+// function ProductTemplate(props){
+//   console.log(props);
+//   return ( 
+          
+//   );
+// }
 
 export default App;
