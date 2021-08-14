@@ -39,7 +39,12 @@ function App() {
       </Navbar>
       
 {/* exact : URL 상에서 겹치는 것들을 안겹치게 해주는 역할 */}
-<Route exact path="/">
+<Switch>
+  {/* Switch : 중복되는 URL 중 맨 위에 있는거 하나만 보여주게 해주는 역할
+    React Router 는 URL 중 겹치는 URL 요소가 있으면 모두 보여주기 때문에 
+    1. exact 2. Switch 를 사용해야 한다. 
+  */}
+  <Route exact path="/">
     {/* 메인페이지 */}
     {/* 웹사이트 대문 */}
     <div className='Jumbotron'>
@@ -68,13 +73,13 @@ function App() {
         </div> 
         
       </div>
-</Route>
+  </Route>
 
-<Route path="/detail">
-  <Detail/>
-</Route>
-
-    </div>
+  <Route path="/detail">
+    <Detail/>
+  </Route>
+</Switch>
+</div>
   );
 }
 
