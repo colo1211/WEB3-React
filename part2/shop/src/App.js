@@ -5,6 +5,8 @@ import './App.css';
 import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap'; 
 // data.js 에서 데이터를 import 해오기 
 import data from './data.js'; 
+import { Route, Link, Switch } from 'react-router-dom';
+
 
 
 function App() {
@@ -36,8 +38,11 @@ function App() {
         </Container>
       </Navbar>
       
-      {/* 웹사이트 대문 */}
-      <div className='Jumbotron'>
+{/* exact : URL 상에서 겹치는 것들을 안겹치게 해주는 역할 */}
+<Route exact path="/">
+    {/* 메인페이지 */}
+    {/* 웹사이트 대문 */}
+    <div className='Jumbotron'>
         <div style = { { paddingTop : '8%' }}>
         <h1> 20% Season Off </h1>
         <p>
@@ -49,7 +54,6 @@ function App() {
         </p>
         </div>
       </div>
-
       <div className='container'>
         <div className = 'row'>
           {/* bootstrap grid layout
@@ -64,10 +68,24 @@ function App() {
         </div> 
         
       </div>
-      
+</Route>
 
+<Route path="/detail">
+<div className="container">
+      <div className="row">
+        <div className="col-md-6">
+          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+        </div>
+        <div className="col-md-6 mt-4">
+          <h4 className="pt-5">상품명</h4>
+          <p>상품설명</p>
+          <p>120000원</p>
+          <button className="btn btn-danger">주문하기</button> 
+        </div>
+      </div>
+</div> 
+</Route>
     </div>
-
   );
 }
 
