@@ -1,11 +1,13 @@
-import React, { useState } from 'react'; 
+import axios from 'axios';
+import React, { useEffect, useState } from 'react'; 
 import { useHistory, useParams } from 'react-router-dom'; 
 import styled from 'styled-components'; 
+import './Detail.scss';
 
 // 스타일 컴포넌트
 let 박스 = styled.div`
   width : 100%;
-  background-color : #eee;
+
 `;
 let 제목 = styled.h4`
   padding-top : 8px; 
@@ -14,6 +16,19 @@ let 제목 = styled.h4`
 `;
 
 function Detail(props){
+
+  let [알림창, 알림창변경] = useState(true); 
+  // 해당 Detail 컴포넌트가 렌더링 될때 실행되는 코드
+
+  let [input, input변경] = useState();
+
+  useEffect(()=>{
+    let 타이머 = setTimeout(()=>{
+      //2초 후에 alert-box 사라지게
+      알림창변경(false); 
+    },1000);
+    console.log('Hi');  
+  });
 
     let { id } = useParams(); 
     // params를 통해서 사용자가 detail/2라고 적었다면 2를 id 값으로 받아와서 데이터 바인딩 할수 있게끔 사용해주는 변수
@@ -30,12 +45,25 @@ function Detail(props){
       return 상품.id == id;
     });
 
+    
+
     return (
+
     <div className="container">
       <박스>
-        <제목 색상={'red'}>Detail Page</제목>
-        <제목 색상={'blue'}>Detail Page</제목>
+        <제목 className='my-detail'>Detail Page</제목>
       </박스>
+
+      {input}
+      <input onChange={(e)=>{input변경(e.target.value)}}/>
+      {
+        알림창 === true
+        ?<div className = 'my-alert'>
+        상품 재고 2개 남았습니다!
+        </div> 
+        : null
+      }
+      
       <div className="row">
         <div className="col-md-6">
           <img src={'../이미지파일/shoes'+ (찾은상품.id+1) +'.jpg'} alt='dsa' width="100%" />
@@ -44,13 +72,13 @@ function Detail(props){
           <h4 className="pt-5">{찾은상품.title}</h4>
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}</p>
-          <button className="btn btn-danger" onClick = {()=>{
+          <button className="btn btn-danger btn-layout" onClick = {()=>{
             history.goBack(); 
           }}>뒤로가기</button> 
-          <button className="btn btn-danger">주문하기</button> 
+          <button className="btn btn-danger btn-layout">주문하기</button> 
         </div>
       </div>
-</div> 
+    </div> 
     );
 }
 
