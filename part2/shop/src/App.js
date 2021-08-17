@@ -7,12 +7,13 @@ import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap';
 import data from './data.js'; 
 import { Route, Link, Switch } from 'react-router-dom';
 import Detail from './Detail.js'; 
-import axios from 'axios'; 
+import axios from 'axios'; // ajax 를 사용하기 위한 axios 라이브러리
 
 function App() {
 
   let [shoes , shoes변경] = useState(data); 
-  
+  let [로딩중, 로딩중변경] = useState(false); // true일때는 로딩중, false 일때는 로딩 X  
+
   function 가격순정렬(){
     let tempShoes = [...shoes];
     tempShoes.sort((a,b)=>{
@@ -82,9 +83,26 @@ function App() {
           }
           
         </div> 
+
+        {
+          로딩중===true
+          ? <div className='loading'> Loading ...</div>
+          : null
+        }
+        
         <button className='btn btn-primary' onClick={()=>{ 
-          axios.get('데이터를 요청할 URL')
-          .then((value)=>{ 
+
+          로딩중변경(true); 
+          // 상품 더보기 기능 개발
+          // Card 컴포넌트는 반복문에 의해서 생성되고 있으므로, shoes 컴포넌트에 자료를 추가해주면 자동으로 
+          // HTML을 짤 필요 없이 화면이 구성된다. 
+
+          // axios.get('url')
+          // .then(()=>{ 성공했을 때 })
+          // .catch(()=>{ 실패했을 때 })
+          axios.get('URL')
+          .then((value)=>{ // 성공했을 때 
+            로딩중변경(false); 
             // 방법 1. 
             let tempArray = [...shoes];
             let temp = [...value.data]; 
@@ -93,11 +111,15 @@ function App() {
             for (let i=0; i<temp.length; i++){
               tempArray.push(temp[i]);
             }
-            // 방법 2.
-            // [[...shoes, ...value.data]]
+            // 방법 2. spread operator 를 활용한 자료 합치기
+            // [[...shoes, ...value.data]] 
+
             shoes변경(tempArray);  
-          }) // 성공했을 때 
-          .catch(()=>{ alert('실패'); });// 실패했을 때
+          })  
+          .catch(()=>{ // 실패했을 때 
+            로딩중변경(false);
+            alert('실패'); 
+          });
          }}> 더보기 </button>
       </div>
   </Route>
