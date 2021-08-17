@@ -83,7 +83,7 @@ let history = useHistory();
 특정 경로로 이동(push) : history.push('/'); 
 
 
-[Switch 컴포넌트 -> 택 1 ] 
+[Switch 컴포넌트 -> 겹치는 것들 중 상위에 있는거 하나만] 
 : URL 중복 허용 X
 Router를 감싸는 용도로 사용한다. 
 
@@ -101,3 +101,56 @@ Router를 감싸는 용도로 사용한다.
 왜냐하면, 리액트 라우터는 겹치는거를 다 보여주기 때문
 => 이 현상을 해결하기 위해서 "URL이 맞는 여러개 중에서 맨 위 하나만 보여주세요~!"의 의미로
 Switch 컴포넌트를 사용한다. 
+
+[App 컴포넌트(메인) -> Detail 컴포넌트(외부 파일 detail.js) ] 
+: shoes 라는 state를 사용하기 위해서는 props 문법으로 전송해야 사용이 가능하다. 
+
+✔✔✔✔✔ [중요! state 관리]
+굳이 shoes라는 state 데이터를 App 컴포넌트에서 선언한 다음에 props를 통해서 shoes 컴포넌트에게 전달한 이후에
+사용해야 하는 것인가? 
+=> Detail 컴포넌트 내에서 shoes state 를 선언한 이후에 사용해도 되는 것 아닌가?
+: 되긴 된다. 
+But ! 중요한 데이터는 항상 App 컴포넌트에 보관하는 것이 정석이자 국룰!
+
+따라서, 모든 중요한 데이터는 App 컴포넌트에 보관하고 다른 컴포넌트에 넘겨주는 것이 좋다.  
+혹은 Redux 파일에 보관한다. 
+
+✔ detail / [뒤의 숫자] 에 따라서 보여주는 상품을 다르게 하려면 어떻게 해야하는가?
+
+detail.js 에서
+=> react-router-dom 의 useParams Hook(함수)을 사용하면 된다. 
+import { useHistory,useParams } from 'react-router-dom'; 
+let { id } = useParams(); 
+{ 사용자가 입력한 URL 파라미터들이 Object 로 남는다. ex){id1/id2} } 
+ex) 사용자가 detail/2 로 입력하면 id는 2가 남는다. 
+
+[ target ]
+ /detail/0  
+: 접속하면 0번째 상품을 보여줌
+ /detail/1 
+: 접속하면 1번째 상품을 보여줌
+ /detail/2 
+: 접속하면 2번째 상품을 보여줌
+
+/detail/:id 
+: detail 뒤에 어떤 글자가 오던간에 아무 문자나 받겠다는 URL 작명법
+1. 콜론 뒤에 맘대로 작명
+2. 여러개 사용 가능  /detail/:id/:id2 
+
+ex1)   <Route path="/detail/:id">
+    <Detail shoes={shoes}/>
+  </Route>
+
+/detail 뒤에 어떤 id가 오던간에 Detail 컴포넌트가 가진 페이지로 이동
+
+ex2) <Route path="/:id">
+    <h3>아무거나 적었을 때 이거 보여줘</h3>
+  </Route>
+
+[실습] 자료의 순서가 변경되면 상세페이지도 고장나는 문제
+: 상품을 가격순 정렬을 눌렀을 때 detail/상세페이지 URL을 입력하면
+상세페이지도 이상해짐
+어떻게 해결할 것인가? find 혹은 filter 함수를 활용
+1. 정렬버튼을 먼저 구현한다. 
+2. data.js 내에 있는 영구적인 id를 이용해본다. 
+
