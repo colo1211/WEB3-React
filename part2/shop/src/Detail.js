@@ -1,5 +1,17 @@
 import React, { useState } from 'react'; 
 import { useHistory, useParams } from 'react-router-dom'; 
+import styled from 'styled-components'; 
+
+// 스타일 컴포넌트
+let 박스 = styled.div`
+  width : 100%;
+  background-color : #eee;
+`;
+let 제목 = styled.h4`
+  padding-top : 8px; 
+  font-size : 30px;
+  color : ${ props => props.색상 }
+`;
 
 function Detail(props){
 
@@ -20,6 +32,10 @@ function Detail(props){
 
     return (
     <div className="container">
+      <박스>
+        <제목 색상={'red'}>Detail Page</제목>
+        <제목 색상={'blue'}>Detail Page</제목>
+      </박스>
       <div className="row">
         <div className="col-md-6">
           <img src={'../이미지파일/shoes'+ (찾은상품.id+1) +'.jpg'} alt='dsa' width="100%" />
