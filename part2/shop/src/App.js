@@ -13,6 +13,16 @@ function App() {
 
   
   let [shoes , shoes변경] = useState(data); 
+  
+  function 가격순정렬(){
+    let tempShoes = [...shoes];
+    tempShoes.sort((a,b)=>{
+      return a.price-b.price;
+    });
+    shoes변경(tempShoes); 
+    console.log(shoes);
+  }
+
   return (
 
     <div className="App">
@@ -20,7 +30,7 @@ function App() {
       {/* Navbar 레이아웃 */}
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="#home">Adadis</Navbar.Brand>
+          <Navbar.Brand ><Link to="/">Adadis</Link></Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -59,6 +69,9 @@ function App() {
         </p>
         </div>
       </div>
+
+      <button className='btn btn-danger mt-3 mb-3' onClick={()=>{가격순정렬()}}>가격 순 정렬</button>
+      
       <div className='container'>
         <div className = 'row'>
           {/* bootstrap grid layout
@@ -75,8 +88,12 @@ function App() {
       </div>
   </Route>
 
-  <Route path="/detail">
-    <Detail/>
+  <Route path="/detail/:id">
+    <Detail shoes={shoes}/>
+  </Route>
+
+  <Route path="/:id">
+    <h3>아무거나 적었을 때 이거 보여줘</h3>
   </Route>
 </Switch>
 </div>
@@ -88,7 +105,7 @@ function ProductTemplate(props){
   // console.log(props);
   return ( 
     <div className = 'col-sm-4 img-wrap'>
-    <img src={'이미지파일/shoes'+ (props.index+1) +'.jpg'}/> 
+    <img src={'이미지파일/shoes'+ (props.shoes[props.index].id+1) +'.jpg'}/> 
     <h4> 상품명 : {props.shoes[props.index].title} </h4>
     <p> 상품설명 : {props.shoes[props.index].content } </p> 
     <p> 가격 : {props.shoes[props.index].price} </p> 
