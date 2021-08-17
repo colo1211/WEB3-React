@@ -7,11 +7,10 @@ import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap';
 import data from './data.js'; 
 import { Route, Link, Switch } from 'react-router-dom';
 import Detail from './Detail.js'; 
-
+import axios from 'axios'; 
 
 function App() {
 
-  
   let [shoes , shoes변경] = useState(data); 
   
   function 가격순정렬(){
@@ -20,7 +19,6 @@ function App() {
       return a.price-b.price;
     });
     shoes변경(tempShoes); 
-    console.log(shoes);
   }
 
   return (
@@ -30,12 +28,12 @@ function App() {
       {/* Navbar 레이아웃 */}
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand ><Link to="/">Adadis</Link></Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">Adadis</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link> <Link to ="/">Home</Link></Nav.Link>
-              <Nav.Link><Link to ="/detail">Detail</Link></Nav.Link>
+              <Nav.Link as={Link} to ="/">Home</Nav.Link>
+              <Nav.Link as={Link} to ="/detail">Detail</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -65,7 +63,7 @@ function App() {
           extra attention to featured content or information.
         </p>
         <p>
-          <Button variant="primary">Learn more</Button>
+          <Button variant="primary">Show more</Button>
         </p>
         </div>
       </div>
@@ -84,7 +82,23 @@ function App() {
           }
           
         </div> 
-        
+        <button className='btn btn-primary' onClick={()=>{ 
+          axios.get('데이터를 요청할 URL')
+          .then((value)=>{ 
+            // 방법 1. 
+            let tempArray = [...shoes];
+            let temp = [...value.data]; 
+            console.log(temp);
+
+            for (let i=0; i<temp.length; i++){
+              tempArray.push(temp[i]);
+            }
+            // 방법 2.
+            // [[...shoes, ...value.data]]
+            shoes변경(tempArray);  
+          }) // 성공했을 때 
+          .catch(()=>{ alert('실패'); });// 실패했을 때
+         }}> 더보기 </button>
       </div>
   </Route>
 
@@ -96,6 +110,7 @@ function App() {
     <h3>아무거나 적었을 때 이거 보여줘</h3>
   </Route>
 </Switch>
+
 </div>
   );
 }
