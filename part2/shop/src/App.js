@@ -13,6 +13,7 @@ function App() {
 
   let [shoes , shoes변경] = useState(data); 
   let [로딩중, 로딩중변경] = useState(false); // true일때는 로딩중, false 일때는 로딩 X  
+  let [재고, 재고변경] = useState([10,11,12]); 
 
   function 가격순정렬(){
     let tempShoes = [...shoes];
@@ -100,7 +101,7 @@ function App() {
           // axios.get('url')
           // .then(()=>{ 성공했을 때 })
           // .catch(()=>{ 실패했을 때 })
-          axios.get('URL')
+          axios.get('https://codingapple1.github.io/shop/data2.json')
           .then((value)=>{ // 성공했을 때 
             로딩중변경(false); 
             // 방법 1. 
@@ -125,7 +126,7 @@ function App() {
   </Route>
 
   <Route path="/detail/:id">
-    <Detail shoes={shoes}/>
+    <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
   </Route>
 
   <Route path="/:id">
