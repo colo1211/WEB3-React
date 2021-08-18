@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'; 
+import React, { useContext, useEffect, useState } from 'react'; 
 import { useHistory, useParams } from 'react-router-dom'; 
 import styled from 'styled-components'; 
 import './Detail.scss';
+import {재고Context} from './App.js'; 
 
 // 스타일 컴포넌트
 let 박스 = styled.div`
@@ -18,6 +19,9 @@ let 제목 = styled.h4`
 // props : shoes, 재고, 재고변경()
 function Detail(props){
 
+  // 재고 Context 범위 내에 있기 때문에 useContext로 받아와서 사용
+  let 재고 = useContext(재고Context);
+  
   let [알림창, 알림창변경] = useState(true); 
   // 해당 Detail 컴포넌트가 렌더링 될때 실행되는 코드
 
@@ -73,7 +77,7 @@ function Detail(props){
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}</p>
           <Info 재고={props.재고} 찾은상품={찾은상품}></Info>
-
+          <p>여기는 useContext를 사용한 재고 {재고[찾은상품.id]}</p> 
           <button className="btn btn-danger btn-layout" onClick = {()=>{
             history.goBack(); 
           }}>뒤로가기</button> 
@@ -90,7 +94,7 @@ function Detail(props){
 
 function Info(props){
   return (
-    <p> 재고 : { props.재고[props.찾은상품.id] } </p>
+    <p>여기는 3중 props를 사용한 재고 : { props.재고[props.찾은상품.id] } </p>
   );
 }
 
