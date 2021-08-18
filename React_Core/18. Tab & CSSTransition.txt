@@ -10,8 +10,8 @@ div 3개
 1번 버튼을 누른 것을 어떻게 전달? UI 만드는 법과 동일하다
 
 0. 버튼을 누르면 onClick 속성을 통해서 state의 상태를 조작한다. 
-1. UI 상태를 true/false state 로 저장해 둔다. 
-2. state 상태에 따라서 UI를 보이게/ 안보이게 설정한다. 
+1. UI 상태를 Tab 번호를 알 수 있는 state 로 저장해 둔다. 
+2. state 번호상태에 따라서 UI를 보이게/ 안보이게 설정한다. 
 
 근데 그냥 버튼 누르는 것으로 UI가 너무 허접하기 때문에 
 react-bootstrap 을 통해서 base-nav 로 들어가서 [tab 컴포넌트]를 가져온다. 
@@ -62,7 +62,7 @@ Tab 이 나올 때 투명도가 0에서 1까지 서서히 변경되는 것을 �
 CSS 개발하는 것과 동일한 방법으로 진행하면 된다. 
 
 react-transition-group 
-: 컴포넌트 등장/업데이트 시 transition(천천히 바꿔주는) 을 쉽게 쉽게 줄수 있는 라이브러리
+: 컴포넌트 등장/업데이트 시 transition(천천히 바꿔주는) 을 쉽게 쉽게 줄 수 있는 라이브러리
 
 [설치법] 
 1. 터미널에서 npm install react-transition-group 
@@ -91,7 +91,10 @@ ex)
 // 애니메이션 동작때 적용할 CSS
 .wow-enter-active{
     opacity: 1;
+    transition : all 0.5s;
 }
+
+TIP! : timeout과 transition의 시간을 맞춰줘야 시간이 제대로 작동하더라...
 
 4. 원할때 스위치를 켜기/ 끄기
 ✔ 탭 버튼을 누르면 스위치를 끔. 
