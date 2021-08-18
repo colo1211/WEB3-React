@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap'; 
@@ -8,6 +8,8 @@ import data from './data.js';
 import { Route, Link, Switch } from 'react-router-dom';
 import Detail from './Detail.js'; 
 import axios from 'axios'; // ajax 를 사용하기 위한 axios 라이브러리
+
+export let 재고Context = React.createContext(); // 선언과 동시에 export 가능 
 
 function App() {
 
@@ -73,6 +75,7 @@ function App() {
       <button className='btn btn-danger mt-3 mb-3' onClick={()=>{가격순정렬()}}>가격 순 정렬</button>
       
       <div className='container'>
+       <재고Context.Provider value={재고}>
         <div className = 'row'>
           {/* bootstrap grid layout
           하나의 row는 12col 로 이루어져 있다.  */}
@@ -84,7 +87,7 @@ function App() {
           }
           
         </div> 
-
+        </재고Context.Provider>
         {
           로딩중===true
           ? <div className='loading'> Loading ...</div>
@@ -125,13 +128,15 @@ function App() {
       </div>
   </Route>
 
-  <Route path="/detail/:id">
-    <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
-  </Route>
-
+  <재고Context.Provider value={재고}>
+    <Route path="/detail/:id">
+      <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+    </Route>
+    </재고Context.Provider>
   <Route path="/:id">
     <h3>아무거나 적었을 때 이거 보여줘</h3>
   </Route>
+  
 </Switch>
 
 </div>
@@ -140,14 +145,23 @@ function App() {
 
 
 function ProductTemplate(props){
-  // console.log(props);
+  let 재고 = useContext(재고Context); 
   return ( 
     <div className = 'col-sm-4 img-wrap'>
     <img src={'이미지파일/shoes'+ (props.shoes[props.index].id+1) +'.jpg'}/> 
     <h4> 상품명 : {props.shoes[props.index].title} </h4>
     <p> 상품설명 : {props.shoes[props.index].content } </p> 
     <p> 가격 : {props.shoes[props.index].price} </p> 
+    <Test id={props.index}></Test>
   </div>      
+  );
+}
+
+function Test(props){
+  let 재고 = useContext(재고Context); 
+  // useContext()를 통해서 얻어오는 방법
+  return (
+    <p>재고 : { 재고[props.id] } </p>
   );
 }
 
