@@ -3,7 +3,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom'; 
 import styled from 'styled-components'; 
 import './Detail.scss';
-import {재고Context} from './App.js'; 
+import { 재고Context } from './App.js'; 
+import { Nav } from 'react-bootstrap'; 
+import { CSSTransition } from 'react-transition-group'; 
 
 // 스타일 컴포넌트
 let 박스 = styled.div`
@@ -26,6 +28,9 @@ function Detail(props){
   // 해당 Detail 컴포넌트가 렌더링 될때 실행되는 코드
 
   let [input, input변경] = useState();
+  let [누른탭, 누른탭변경] = useState(0); 
+
+  let [스위치, 스위치변경] = useState(false); 
 
   useEffect(()=>{
     let 타이머 = setTimeout(()=>{
@@ -88,8 +93,48 @@ function Detail(props){
           }}>주문하기</button> 
         </div>
       </div>
+
+      {/* Tab 기능 개발하기, 1번 누르면 1번에 대한 내용이 뜨게 개발한다.  */}
+      <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link eventKey="link-0" onClick = {()=>{ 스위치변경(false); 누른탭변경(0)}}>Option 0</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-1" onClick = {()=>{ 스위치변경(false); 누른탭변경(1)}}>Option 1</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-2" onClick = {()=>{ 스위치변경(false); 누른탭변경(2)}}>Option 2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      <CSSTransition in={스위치} classNames='wow' timeout={2000}>
+        <Tab 누른탭={누른탭} 스위치변경={스위치변경}></Tab>
+      </CSSTransition>
+    
     </div> 
     );
+}
+
+function Tab(props){
+
+  // 컴포넌트가 로드가 될때
+  useEffect(()=>{
+    props.스위치변경(true); 
+  })
+
+  if (props.누른탭 === 0){
+    return (
+      <div>0번째 탭 내용임 ㅅㄱ</div>
+    );
+  }else if(props.누른탭 === 1){
+    return (
+      <div>1번째 탭 내용임 ㅅㄱ</div> 
+    );
+  }else if(props.누른탭 === 2){
+    return (
+      <div>2번째 탭 내용임 ㅅㄱ</div>
+    );
+  }
 }
 
 function Info(props){
