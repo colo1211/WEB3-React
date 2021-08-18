@@ -1,0 +1,63 @@
+// 사용하기 위해서는 npm install node-sass
+// 여기다가 Sass 문법을 작성하면 node-sass가 설치되어 있다면 알아서 CSS 파일로 컴파일링 해준다.  
+@import './_reset.scss';
+
+$메인색상 : rgb(190, 40, 40); 
+
+// 애니메이션 시작때 적용할 CSS
+.wow-enter{
+    opacity: 0;
+}
+
+// 애니메이션 동작때 적용할 CSS
+.wow-enter-active{
+    opacity: 1;
+    transition: all 2s;
+}
+
+.my-detail{
+    color :$메인색상;
+}
+
+// div.container{
+//     h4{
+//         color : orchid;
+//     }
+//     p{
+//         color : green; 
+//     }
+// }
+.btn-layout{
+    margin-left : 5px;
+    margin-right : 5px;
+}
+
+@mixin 함수($색상){
+    padding : 50px; 
+    background-color: $색상;
+    border-radius: 5px;
+    max-width : 500px; 
+    margin:auto; 
+    width : 100%; 
+}
+
+.my-alert{
+    padding : 20px; 
+    background-color: coral;
+    color : white;
+    border-radius: 5px;
+    max-width : 500px; 
+    margin:auto; 
+    width : 100%; 
+}
+
+.my-alert2{
+    // 기존에 있던 my-alert 의 UI를 그대로 하되 
+    @extend .my-alert; 
+    // 색상만 커스텀화 한다. 
+    background-color: red;
+}
+
+.my-alert3{
+    @include 함수(rgb(186, 213, 224)); 
+}
