@@ -15,6 +15,7 @@ let 제목 = styled.h4`
   color : ${ props => props.색상 }
 `;
 
+// props : shoes, 재고, 재고변경()
 function Detail(props){
 
   let [알림창, 알림창변경] = useState(true); 
@@ -27,8 +28,7 @@ function Detail(props){
       //2초 후에 alert-box 사라지게
       알림창변경(false); 
     },1000);
-    console.log('Hi');  
-  });
+  },[]);
 
     let { id } = useParams(); 
     // params를 통해서 사용자가 detail/2라고 적었다면 2를 id 값으로 받아와서 데이터 바인딩 할수 있게끔 사용해주는 변수
@@ -59,7 +59,7 @@ function Detail(props){
       {
         알림창 === true
         ?<div className = 'my-alert'>
-        상품 재고 2개 남았습니다!
+        상품 재고 {props.재고[찾은상품.id]}개 남았습니다!
         </div> 
         : null
       }
@@ -72,14 +72,26 @@ function Detail(props){
           <h4 className="pt-5">{찾은상품.title}</h4>
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}</p>
+          <Info 재고={props.재고} 찾은상품={찾은상품}></Info>
+
           <button className="btn btn-danger btn-layout" onClick = {()=>{
             history.goBack(); 
           }}>뒤로가기</button> 
-          <button className="btn btn-danger btn-layout">주문하기</button> 
+          <button className="btn btn-danger btn-layout" onClick={()=>{
+            let tempArray = [...props.재고];
+            tempArray[찾은상품.id] = props.재고[찾은상품.id] - 1;
+            props.재고변경(tempArray); 
+          }}>주문하기</button> 
         </div>
       </div>
     </div> 
     );
+}
+
+function Info(props){
+  return (
+    <p> 재고 : { props.재고[props.찾은상품.id] } </p>
+  );
 }
 
 export default Detail; 
