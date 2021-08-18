@@ -25,6 +25,8 @@ function App() {
     shoes변경(tempShoes); 
   }
 
+  
+
   return (
 
     <div className="App">
@@ -94,7 +96,7 @@ function App() {
           : null
         }
         
-        <button className='btn btn-primary' onClick={()=>{ 
+        <button className='btn btn-primary mt-5' onClick={()=>{ 
 
           로딩중변경(true); 
           // 상품 더보기 기능 개발
@@ -148,8 +150,10 @@ function ProductTemplate(props){
   let 재고 = useContext(재고Context); 
   return ( 
     <div className = 'col-sm-4 img-wrap'>
+    <Link to={'/detail/'+props.index} style={{ textDecoration: 'none', color : 'black' }}>
     <img src={'이미지파일/shoes'+ (props.shoes[props.index].id+1) +'.jpg'}/> 
-    <h4> 상품명 : {props.shoes[props.index].title} </h4>
+    <h4>상품명 : {props.shoes[props.index].title} </h4>
+    </Link>
     <p> 상품설명 : {props.shoes[props.index].content } </p> 
     <p> 가격 : {props.shoes[props.index].price} </p> 
     <Test id={props.index}></Test>
