@@ -74,3 +74,17 @@ ex)
 
 	3. function Cart(props)에서 보는것과 같이 props로 받아온다. 
 	4. {props.state[0].~~} 와 같이 데이터 바인딩 가능해진다. 
+
+
+[요약]
+
+Redux를 이용
+index.js 에서 let store = createStore(()=>{ return[~~]}); 을 통해 store을 정의하고
+<Provider store={store}>
+<App/>
+</Provider> 
+를 통해서 전달한 state를 Cart.js 에서 받아온다. 
+이를 받아오기 위해서는
+import {connect} from 'react-redux'; 
+export default (state를props화시키는함수이름)(Cart);
+을 작성하여 Cart 컴포넌트에서 props를 받아와서 사용하면 된다. 
