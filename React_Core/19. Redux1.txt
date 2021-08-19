@@ -35,7 +35,7 @@ import {table} : table 이라는 변수/함수 가져오기
 (두개를 띄워서 입력하면 동시에 두개가 설치 된다)
 
 3. [index.js] 로 이동
-> import {Provider} from 'react-redux';
+> import { Provider } from 'react-redux';
 > <Provider> 로 <App>을 감싸기 
 ⭐ Provider 로 감싼 애들은 props 없이도 state 공유가 가능하다. 
 
