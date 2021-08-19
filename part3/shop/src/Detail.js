@@ -6,6 +6,7 @@ import './Detail.scss';
 import { 재고Context } from './App.js'; 
 import { Nav } from 'react-bootstrap'; 
 import { CSSTransition } from 'react-transition-group'; 
+import { connect } from 'react-redux';
 
 // 스타일 컴포넌트
 let 박스 = styled.div`
@@ -54,7 +55,9 @@ function Detail(props){
       return 상품.id == id;
     });
 
-    
+    // function 장바구니추가(추가상품){
+    //    props.dispatch({type : '장바구니추가', payload : {추가상품 : `${추가상품}`}});
+    // }
 
     return (
 
@@ -90,6 +93,8 @@ function Detail(props){
             let tempArray = [...props.재고];
             tempArray[찾은상품.id] = props.재고[찾은상품.id] - 1;
             props.재고변경(tempArray); 
+            props.dispatch({ type : '장바구니추가', payload : { id : `${(props.state.length)}`, name : `${찾은상품.title}`, quan : 1}})
+            history.push('/cart');
           }}>주문하기</button> 
         </div>
       </div>
@@ -143,4 +148,12 @@ function Info(props){
   );
 }
 
-export default Detail; 
+// store 에 저장되어 있는 state를 props화 시키는 작업
+function state를props화(state){
+  return{
+    state : state.reducer, 
+    alert초기값 : state.reducer2
+  }
+}
+
+export default connect(state를props화)(Detail); 
