@@ -5,6 +5,8 @@ let alert초기값 = true;
 function reducer2(state=alert초기값, 액션){
   if (액션.type === '닫기'){
     return false;
+  } else if(액션.type ==='열기'){
+      return true; 
   }
   return state;
 }
@@ -24,15 +26,21 @@ let 데이터 = [
 
 // default parameter 문법, ES6 신문법
 function reducer(초기값 = 데이터, 액션){
-  if (액션.type === '수량증가'){
+  if (액션.type === '장바구니추가'){
     let copy = [...초기값];
-    copy[0].quan++; 
+    copy.push(액션.payload); 
+    return copy; 
+  }
+  else if (액션.type === '수량증가'){
+    console.log('액션빔',액션.payload);
+    let copy = [...초기값];
+    copy[액션.payload].quan++; 
     // console.log('수량증가누름');
     return copy; 
   }
   else if(액션.type === '수량감소'){
     let copy = [...초기값];
-    copy[0].quan--;
+    copy[액션.payload].quan--;
     // console.log('수량감소누름');
     return copy; 
   }
