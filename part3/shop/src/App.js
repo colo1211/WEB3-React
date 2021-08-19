@@ -8,6 +8,7 @@ import data from './data.js';
 import { Route, Link, Switch } from 'react-router-dom';
 import Detail from './Detail.js'; 
 import axios from 'axios'; // ajax 를 사용하기 위한 axios 라이브러리
+import Cart from './Cart.js';
 
 export let 재고Context = React.createContext(); // 선언과 동시에 export 가능 
 
@@ -130,15 +131,24 @@ function App() {
       </div>
   </Route>
 
+  <Route path="/cart" component={Cart}>
+  </Route>
+
+  
+
   <재고Context.Provider value={재고}>
     <Route path="/detail/:id">
       <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
     </Route>
-    </재고Context.Provider>
+  </재고Context.Provider>
+
   <Route path="/:id">
     <h3>아무거나 적었을 때 이거 보여줘</h3>
   </Route>
   
+  
+  
+
 </Switch>
 
 </div>
