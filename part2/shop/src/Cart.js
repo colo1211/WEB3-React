@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Table} from 'react-bootstrap'; 
 import { connect } from 'react-redux';
 
 
 function Cart(props){
-   
+    useEffect(()=>{
+        props.dispatch({type : 'false'});
+    },[]);
     return (
+        <div>
         <Table striped bordered hover>
             <thead>
                 <tr>
@@ -44,12 +47,27 @@ function Cart(props){
                 </tr> */}
             </tbody>
         </Table>
+
+            {
+                props.알림창닫기 === false
+                ? <div className='my-alert'>
+                <p>지금 구매하면 20% 할인!</p>
+                <button className='btn btn btn-primary' onClick={()=>{
+                    props.dispatch({type : 'true'});
+                }}>Close</button>
+                </div>  
+                : null
+            }
+
+        </div>
     )
 }
 
 function state를props화(state){
+    console.log(state); 
     return {
-        state : state
+        state : state.reducer,
+        알림창닫기 : state.reducer2
     }
 }
 
