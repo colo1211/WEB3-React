@@ -6,6 +6,7 @@ import './Detail.scss';
 import { 재고Context } from './App.js'; 
 import { Nav } from 'react-bootstrap'; 
 import { CSSTransition } from 'react-transition-group'; 
+import { connect } from 'react-redux';
 
 // 스타일 컴포넌트
 let 박스 = styled.div`
@@ -20,7 +21,6 @@ let 제목 = styled.h4`
 
 // props : shoes, 재고, 재고변경()
 function Detail(props){
-
   // 재고 Context 범위 내에 있기 때문에 useContext로 받아와서 사용
   let 재고 = useContext(재고Context);
   
@@ -90,6 +90,8 @@ function Detail(props){
             let tempArray = [...props.재고];
             tempArray[찾은상품.id] = props.재고[찾은상품.id] - 1;
             props.재고변경(tempArray); 
+            props.dispatch({type : '장바구니추가', payload : { id : props.state.length, name : `${찾은상품.title}`, 수량 : 1}});
+            history.push('/cart');
           }}>주문하기</button> 
         </div>
       </div>
@@ -143,4 +145,11 @@ function Info(props){
   );
 }
 
-export default Detail; 
+function state를props화(state){
+  return {
+    state : state.reducer,
+    알림창닫기 : state.reducer2
+  }
+}
+
+export default connect(state를props화)(Detail); 
