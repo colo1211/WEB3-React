@@ -1,14 +1,17 @@
 /* eslint-disable */
-import React, {useState, useContext} from 'react';
-import logo from './logo.svg';
+import React, {useState, useContext, useHistory, useEffect, lazy, Suspense} from 'react';
 import './App.css';
 import { Nav, Navbar, NavDropdown, Container, Button} from 'react-bootstrap'; 
+import { Route, Link, Switch } from 'react-router-dom';
+import axios from 'axios'; // ajax 를 사용하기 위한 axios 라이브러리
+
 // data.js 에서 데이터를 import 해오기 
 import data from './data.js'; 
-import { Route, Link, Switch } from 'react-router-dom';
-import Detail from './Detail.js'; 
-import axios from 'axios'; // ajax 를 사용하기 위한 axios 라이브러리
-import Cart from './Cart.js';
+
+// import Cart from './Cart.js';
+let Cart = lazy(() => { return import('./Cart.js'); }); 
+// import Detail from './Detail.js'; 
+let Detail = lazy(() => { return import('./Detail.js'); }); 
 
 export let 재고Context = React.createContext(); // 선언과 동시에 export 가능 
 
@@ -26,11 +29,22 @@ function App() {
     shoes변경(tempShoes); 
   }
 
-  
+  let [count, count변경]= useState(0);
+  let [age, age변경] = useState(20);  
+
+  // async 문제를 useEffect 를 통해서 해결한다. 
+  useEffect(()=>{
+    if (count !==0 &&count < 3){
+      age변경(age+1);
+    }
+  }, [count])
 
   return (
-
     <div className="App">
+      <div>안녕하십니까 전 {age}</div>
+      <button onClick={()=>{
+         count변경(count+1);
+      }}>누르면 한살 먹음</button>
 
       {/* Navbar 레이아웃 */}
       <Navbar bg="light" expand="lg">
@@ -40,7 +54,7 @@ function App() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to ="/">Home</Nav.Link>
-              <Nav.Link as={Link} to ="/detail">Detail</Nav.Link>
+              <Nav.Link as={Link} to ="/cart">Cart</Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -131,14 +145,17 @@ function App() {
       </div>
   </Route>
 
-  <Route path="/cart" component={Cart}>
+  <Route path="/cart">
+      <Suspense fallback={<div>cart ㄱㄷ</div>}>
+        <Cart/>
+      </Suspense>
   </Route>
-
   
-
   <재고Context.Provider value={재고}>
     <Route path="/detail/:id">
-      <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+        <Suspense fallback={<div>detail ㄱㄷ</div>}>
+          <Detail shoes={shoes} 재고={재고} 재고변경={재고변경}/>
+        </Suspense>
     </Route>
   </재고Context.Provider>
 
@@ -160,7 +177,7 @@ function ProductTemplate(props){
   let 재고 = useContext(재고Context); 
   return ( 
     <div className = 'col-sm-4 img-wrap'>
-    <Link to={'/detail/'+props.index} style={{ textDecoration: 'none', color : 'black' }}>
+    <Link to={'/detail/'+props.shoes[props.index].id} style={{ textDecoration: 'none', color : 'black' }}>
     <img src={'이미지파일/shoes'+ (props.shoes[props.index].id+1) +'.jpg'}/> 
     <h4>상품명 : {props.shoes[props.index].title} </h4>
     </Link>
