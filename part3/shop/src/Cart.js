@@ -1,10 +1,21 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import './Detail.scss'; 
+import {useHistory} from 'react-router-dom'; 
 
 function Cart(props){
-    console.log(props); 
+
+
+    let state = useSelector((state)=>{ return state});
+
+    let dispatch = useDispatch(); 
+
+    let history = useHistory();
+    useEffect(()=>{
+        dispatch({type : '열기'})
+    },[]);
+    //console.log(props); 
     return (
         <div>
             <Table striped bordered hover>
@@ -18,7 +29,7 @@ function Cart(props){
                 </thead>
                 <tbody>
                    { 
-                     props.state.map((value,index)=>{
+                     state.reducer.map((value,index)=>{
                          return (
                         <tr key={index}>
                             <td>{value.id}</td>
@@ -26,10 +37,10 @@ function Cart(props){
                             <td>{value.quan}</td>
                             <td>
                                 <button className='btn btn-danger' style={{marginRight : '5px'}}onClick={()=>{
-                                    props.dispatch({type:'수량증가'});
+                                    dispatch({type:'수량증가', payload : `${index}`});
                                 }}>+</button>
                                 <button className='btn btn-danger' style={{marginLeft : '5px'}} onClick ={()=>{
-                                    props.dispatch({type : '수량감소'});
+                                    if (state.reducer[value.id].quan>0) dispatch({ type : '수량감소', payload :`${index}`});
                                 }}>-</button>
                             </td>
                         </tr>
@@ -38,12 +49,12 @@ function Cart(props){
                    }
                 </tbody>
             </Table>
-
+            <button className='btn btn-primary' onClick={()=>{history.goBack()}}>Back</button>
             {
                 props.alert === true
-                ? <div className='my-alert'>
+                ? <div className='my-alert mt-5'>
                     <p>지금 구매하면 신규할인 20%</p>
-                    <button className='btn btn-primary' onClick = {()=>{props.dispatch({type:'닫기'})}}>Close</button>
+                    <button className='btn btn-primary' onClick = {()=>{dispatch({type:'닫기'})}}>Close</button>
                   </div> 
                 :null // false 라면? 
 
@@ -65,14 +76,16 @@ function Cart(props){
 // export default (state를props화시키는함수이름)(Cart);
 // 을 작성하여 Cart 컴포넌트에서 props를 받아와서 사용하면 된다. 
 
-function state를props화(state){
-    console.log(state);
-    // return 내부에 있는 내용들이 props 로 전달될 것임.
-    // 따라서 return 을 { } 객체형태로 반환하게끔 중괄호로 해준다. 
-    return {
-        state : state.reducer,
-        alert : state.reducer2
-    }
-}
+// function state를props화(state){
+//     console.log(state);
+//     // return 내부에 있는 내용들이 props 로 전달될 것임.
+//     // 따라서 return 을 { } 객체형태로 반환하게끔 중괄호로 해준다. 
+//     return {
+//         state : state.reducer,
+//         alert : state.reducer2
+//     }
+// }
 
-export default connect(state를props화)(Cart); 
+// export default connect(state를props화)(Cart); 
+
+export default Cart; 
