@@ -28,7 +28,20 @@ let 데이터 = [
 function reducer(초기값 = 데이터, 액션){
   if (액션.type === '장바구니추가'){
     let copy = [...초기값];
-    copy.push(액션.payload); 
+    let already = false;
+    let where = 0; 
+    for (let i =0; i<copy.length; i++){
+      if (copy[i].name === 액션.payload.name){
+        already = true; 
+        where = i;
+        break; 
+      }
+    }
+    if (already === true){ // 이미있다면
+      copy[where].quan++;
+    }else{ // 없다면
+      copy.push(액션.payload);
+    }
     return copy; 
   }
   else if (액션.type === '수량증가'){
