@@ -61,3 +61,15 @@ $메인색상 : rgb(190, 40, 40);
 .my-alert3{
     @include 함수(rgb(186, 213, 224)); 
 }
+
+.show{
+    width : 150px; 
+    padding : 20px;
+    background-color: #eee;
+
+}
+
+.show-product{
+    border-top : 1px solid black; 
+    border-bottom : 1px solid black; 
+}
