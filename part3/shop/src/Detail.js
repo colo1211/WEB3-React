@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'; 
 import { useHistory, useParams } from 'react-router-dom'; 
 import styled from 'styled-components'; 
@@ -33,13 +32,6 @@ function Detail(props){
 
   let [스위치, 스위치변경] = useState(false); 
 
-  useEffect(()=>{
-    let 타이머 = setTimeout(()=>{
-      //2초 후에 alert-box 사라지게
-      알림창변경(false); 
-    },1000);
-  },[]);
-
     let { id } = useParams(); 
     // params를 통해서 사용자가 detail/2라고 적었다면 2를 id 값으로 받아와서 데이터 바인딩 할수 있게끔 사용해주는 변수
     // detail/2 접속시 => props.shies[id].price 
@@ -55,6 +47,27 @@ function Detail(props){
       return 상품.id == id;
     });
 
+    var arr; 
+
+    useEffect(()=>{
+      let 타이머 = setTimeout(()=>{
+        //2초 후에 alert-box 사라지게
+        알림창변경(false); 
+      },1000);
+
+      arr = localStorage.getItem('show');  
+      if (arr===null){
+        arr = []; 
+      }else {
+        arr = JSON.parse(arr);
+      }
+      arr.push(id);
+      arr = new Set(arr); // 중복 제거 
+      arr = [...arr];  
+      console.log(arr); 
+      localStorage.setItem('show', JSON.stringify(arr));
+    },[]);
+  
     // function 장바구니추가(추가상품){
     //    props.dispatch({type : '장바구니추가', payload : {추가상품 : `${추가상품}`}});
     // }
@@ -66,8 +79,6 @@ function Detail(props){
         <제목 className='my-detail'>Detail Page</제목>
       </박스>
 
-      {input}
-      <input onChange={(e)=>{input변경(e.target.value)}}/>
       {
         알림창 === true
         ?<div className = 'my-alert'>
@@ -93,11 +104,14 @@ function Detail(props){
             let tempArray = [...props.재고];
             tempArray[찾은상품.id] = props.재고[찾은상품.id] - 1;
             props.재고변경(tempArray); 
-            props.dispatch({ type : '장바구니추가', payload : { id : `${(props.state.length)}`, name : `${찾은상품.title}`, quan : 1}})
+            props.dispatch({ type : '장바구니추가', payload : { id : `${props.state.length}`, name : `${찾은상품.title}`, quan : 1}})
             history.push('/cart');
           }}>주문하기</button> 
         </div>
       </div>
+
+
+      <Show shoes={props.shoes} arr={JSON.parse(localStorage.getItem('show'))}></Show>
 
       {/* Tab 기능 개발하기, 1번 누르면 1번에 대한 내용이 뜨게 개발한다.  */}
       <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0">
@@ -119,6 +133,30 @@ function Detail(props){
     </div> 
     );
 }
+
+function Show(props){
+  let history = useHistory(); 
+  console.log(props.shoes); 
+  return (
+    <div className='show'>
+      <h3>최근 본 상품</h3> 
+      {
+        props.arr.map((value)=>{ 
+          return (
+            <div className = 'show-product'>
+              <p onClick={
+                ()=>{
+                  history.push(`/detail/${value}`);
+                }
+              }>{value} 번째 상품</p>
+            </div>
+          )
+        })
+      }
+    </div>
+  )
+}
+
 
 function Tab(props){
 
