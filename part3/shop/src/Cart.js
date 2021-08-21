@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'; 
+import React, { useEffect,memo } from 'react'; 
 import { Table } from 'react-bootstrap';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import './Detail.scss'; 
@@ -6,6 +6,9 @@ import {useHistory} from 'react-router-dom';
 
 function Cart(props){
 
+
+    let 이름 = '김경원'; 
+    let 나이 = 26; 
 
     let state = useSelector((state)=>{ return state});
 
@@ -59,11 +62,38 @@ function Cart(props){
                 :null // false 라면? 
 
             }
-            
-
+            <Parents 이름={이름} 나이={나이}></Parents>
         </div>
     )
 }
+
+
+function Parents(props){
+    return (
+        <div>
+            <Child1 이름={props.이름}></Child1>
+            <Child2 나이={props.나이}></Child2>
+        </div>
+    )
+}
+
+let Child1 = memo(function(props){
+    useEffect(()=>{
+        console.log('1번째 props가 변경된거 같아서 재렌더링함');
+    })
+    return(
+        <div>{props.이름}</div>
+    )
+})
+
+let Child2 = memo(function(props){
+    useEffect(()=>{
+        console.log('2번째 props가 변경된거 같아서 재렌더링함'); 
+    })
+    return (
+        <div>{props.나이}</div> 
+    )
+})
 
 // Redux를 이용
 // index.js 에서 let store = createStore(()=>{ return[~~]}); 을 통해 store을 정의하고
