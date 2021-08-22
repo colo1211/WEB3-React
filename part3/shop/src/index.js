@@ -6,41 +6,9 @@ import reportWebVitals from './reportWebVitals';
 
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
-import { createStore } from 'redux';
-
-
- 
-
-let 데이터 = [
-  {
-    id : 0, 
-    name:'멋진 신발', 
-    quan : 2
-  },
-  {
-    id : 1, 
-    name:'멋진 신발2', 
-    quan : 3
-  }
-];
-
-function reducer(초기값 = 데이터, 액션){
-  if (액션.type === '수량증가'){
-    let copy = [...초기값];
-    copy[0].quan++; 
-    return copy; 
-  }
-  else if(액션.type === '수량감소'){
-    let copy = [...초기값];
-    copy[0].quan--;
-    return copy; 
-  }
-  else {
-    return 초기값;
-  } 
-}
-
-let store = createStore(reducer);
+import { combineReducers, createStore } from 'redux';
+import  store  from './redux.js'; 
+// 아래의 store는 길기 때문에 모두 redux.js 로 뺐으며, 이를 store 로 import 해왔음
 
 ReactDOM.render(
   <React.StrictMode>
